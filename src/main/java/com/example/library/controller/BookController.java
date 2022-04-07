@@ -26,6 +26,11 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<Collection<BookDTO>> getBooks(@RequestParam Long bookId, @RequestParam int skip, @RequestParam int page) {
-        return null;
+        Collection<BookDTO> books = bookService.getBooks(bookId, skip, page);
+        return ResponseEntity
+                .ok()
+                .header("Location", "/book")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(books);
     }
 }
