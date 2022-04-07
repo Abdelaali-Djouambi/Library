@@ -44,4 +44,32 @@ public class BookControllerTest {
 
         assertThat(responseEntity.getBody().size()).isEqualTo(10);
     }
+
+    @Test
+    @DisplayName("Get books by id - success")
+    void findBookByIdSuccess(){
+        BookDTO bookDTO= new BookDTO("Lord of the ring", "J.R.R Tolkien",30l,200l);
+        List<BookDTO> bookDTOs= Mockito.spy(ArrayList.class);
+        bookDTOs.add(bookDTO);
+        when(bookService.getBooks(nullable(Long.class),any(Integer.class),any(Integer.class))).thenReturn(bookDTOs);
+        ResponseEntity<Collection<BookDTO>> responseEntity = bookController.getBooks(1l,0,0);
+
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
+        assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/book");
+
+        assertThat(responseEntity.getBody().stream().findFirst()).isPresent();
+    }
+
+    @Test
+    @DisplayName("Get books by id - Not found")
+    void findBookByIdFail(){
+        List<BookDTO> bookDTOs= Mockito.mock(ArrayList.class);
+        when(bookService.getBooks(nullable(Long.class),any(Integer.class),any(Integer.class))).thenReturn(bookDTOs);
+        ResponseEntity<Collection<BookDTO>> responseEntity = bookController.getBooks(1l,0,0);
+
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+        assertThat(responseEntity.getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
+        assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/book");
+    }
 }
