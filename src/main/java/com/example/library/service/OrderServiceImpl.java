@@ -3,9 +3,11 @@ package com.example.library.service;
 import com.example.library.model.MakeOrderDTO;
 import com.example.library.model.OrderDTO;
 import com.example.library.model.ValidateOrderDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OrderServiceImpl implements OrderService{
     @Override
     public List<OrderDTO> getOrders(String userName) {

@@ -1,6 +1,5 @@
 package com.example.library.controller;
 
-import com.example.library.entity.Book;
 import com.example.library.model.BookDTO;
 import com.example.library.service.BookService;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +22,7 @@ import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class BookControlerTest {
+public class BookControllerTest {
 
     @InjectMocks
     BookController bookController;
@@ -36,7 +35,7 @@ public class BookControlerTest {
     void getBooksListSuccess(){
         List<BookDTO> bookDTOs= Mockito.mock(ArrayList.class);
         when(bookDTOs.size()).thenReturn(10);
-        when(bookService.getBooks(nullable(Long.class),any(Integer.class),any(Integer.class)));
+        when(bookService.getBooks(nullable(Long.class),any(Integer.class),any(Integer.class))).thenReturn(bookDTOs);
         ResponseEntity<Collection<BookDTO>> responseEntity = bookController.getBooks(null,10,0);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
