@@ -12,9 +12,9 @@ import java.time.LocalDate;
 public class BookDTO extends AbstractDTO{
 
     private String title;
-    private LocalDate releaseDate;
     private String author;
     private Long price;
+    private Long stock;
 
 
 }
