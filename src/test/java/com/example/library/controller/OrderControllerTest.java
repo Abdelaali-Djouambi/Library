@@ -2,7 +2,7 @@ package com.example.library.controller;
 
 import com.example.library.model.BookDTO;
 import com.example.library.model.OrderDTO;
-import com.example.library.model.ClientDTO;
+import com.example.library.model.UserDTO;
 import com.example.library.model.ValidateOrderDTO;
 import com.example.library.service.OrderService;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserOrderControllerTest {
+public class OrderControllerTest {
 
     @InjectMocks
     OrderController orderController;
@@ -50,12 +50,12 @@ public class UserOrderControllerTest {
     @DisplayName("Get books by id - success")
     void findBookByIdSuccess(){
         BookDTO bookDTO= new BookDTO("Lord of the ring", "J.R.R Tolkien",30l,200l);
-        ClientDTO clientDTO = new ClientDTO("foo", 10000l);
+        UserDTO userDTO = new UserDTO("foo", 10000l);
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setVersion(1l);
         orderDTO.setId(2l);
         orderDTO.setBooks(List.of(bookDTO));
-        orderDTO.setUser(clientDTO);
+        orderDTO.setUser(userDTO);
 
         ValidateOrderDTO validateOrderDTO=new ValidateOrderDTO(1l,"foo");
 
