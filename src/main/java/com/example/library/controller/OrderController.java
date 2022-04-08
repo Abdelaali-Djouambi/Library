@@ -19,12 +19,12 @@ public class OrderController {
     }
 
     @PostMapping("/makeOrder")
-    public ResponseEntity<OrderDTO> getOrders(@RequestBody MakeOrderDTO makeOrder){
+    public ResponseEntity<OrderDTO> makeOrder(@RequestBody MakeOrderDTO makeOrder){
         return null;
     }
 
     @PostMapping("/validateOrder")
-    public ResponseEntity<OrderDTO> getOrders(@RequestBody ValidateOrderDTO validateOrder){
+    public ResponseEntity<OrderDTO> validateOrder(@RequestBody ValidateOrderDTO validateOrder){
         return null;
     }
 }
