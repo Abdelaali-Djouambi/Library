@@ -1,11 +1,10 @@
 package com.example.library.controller;
 
-import com.example.library.model.BookDTO;
-import com.example.library.model.OrderDTO;
-import com.example.library.model.UserDTO;
-import com.example.library.model.ValidateOrderDTO;
+import com.example.library.exceptions.ResourceNotFoundException;
+import com.example.library.model.*;
 import com.example.library.service.OrderService;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.when;
@@ -47,8 +47,8 @@ class OrderControllerTest {
     }
 
     @Test
-    @DisplayName("Get books by id - success")
-    void findBookByIdSuccess(){
+    @DisplayName("Get order- success")
+    void findOrderByIdSuccess(){
         BookDTO bookDTO= new BookDTO("Lord of the ring", "J.R.R Tolkien",30l,200l);
         UserDTO userDTO = new UserDTO("foo", 10000l);
         OrderDTO orderDTO = new OrderDTO();
@@ -70,11 +70,39 @@ class OrderControllerTest {
     }
 
     @Test
-    @DisplayName("Get books by id - Not found")
-    void findBookByIdFail(){
+    @DisplayName("Get order - Not found")
+    void findOrderByIdFail(){
         when(orderService.getOrder(nullable(ValidateOrderDTO.class))).thenReturn(Optional.empty());
         ResponseEntity<OrderDTO> responseEntity = orderController.getOrder(null);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
     }
+
+    @Test
+    @DisplayName("User makes order - Success")
+    void makeOrderSuccess(){
+        MakeOrderDTO makeOrderDTO = new MakeOrderDTO("foo", 2l);
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setId(2l);
+        orderDTO.setUser(new UserDTO("foo",1000l));
+
+        when(orderService.makeOrder(nullable(MakeOrderDTO.class))).thenReturn(Optional.of(orderDTO));
+
+        ResponseEntity<OrderDTO> responseEntity = orderController.makeOrder(makeOrderDTO);
+
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
+        assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/order/2");
+
+        assertThat(responseEntity.getBody().getUser().getUserName()).isEqualTo("foo");
+    }
+
+    @Test
+    @DisplayName("User makes order - User not found")
+    void makeOrderErrorUserNotFound(){
+        MakeOrderDTO makeOrderDTO = new MakeOrderDTO("foo", 2l);
+        when(orderService.makeOrder(nullable(MakeOrderDTO.class))).thenThrow(ResourceNotFoundException.class);
+        assertThrows(ResourceNotFoundException.class, ()->orderController.makeOrder(makeOrderDTO));
+    }
+
 }
