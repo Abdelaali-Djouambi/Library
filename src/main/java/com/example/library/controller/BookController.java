@@ -40,6 +40,17 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<BookDTO> getBook(@RequestParam Long bookId) {
-        return null;
+        Optional<BookDTO> optionalBook = bookService.getBook(bookId);
+        if (optionalBook.isPresent()) {
+                return ResponseEntity
+                        .ok()
+                        .header("Location", "/book/"+bookId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .eTag(Long.toString(optionalBook.get().getVersion()))
+                        .location(URI.create("/book/" + optionalBook.get().getId()))
+                        .body(optionalBook.get());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
