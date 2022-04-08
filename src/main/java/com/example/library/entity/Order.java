@@ -11,6 +11,13 @@ import java.util.Collection;
 @NoArgsConstructor
 @Table(name = "lb_order")
 public class Order extends AbstractEntity{
+    public enum STATUS{
+        PENDING,
+        VALIDATED,
+        DELIVERED
+    }
+    private STATUS status;
+
     @ManyToOne
     private User user;
     @ManyToMany(fetch = FetchType.EAGER)
