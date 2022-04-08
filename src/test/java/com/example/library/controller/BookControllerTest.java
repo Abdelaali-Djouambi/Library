@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class BookControllerTest {
+class BookControllerTest {
 
     @InjectMocks
     BookController bookController;
@@ -43,7 +43,7 @@ public class BookControllerTest {
         assertThat(responseEntity.getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
         assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/book");
 
-        assertThat(responseEntity.getBody().size()).isEqualTo(10);
+        assertThat(responseEntity.getBody()).hasSize(10);
     }
 
     @Test

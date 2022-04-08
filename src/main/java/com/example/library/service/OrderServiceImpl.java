@@ -5,14 +5,16 @@ import com.example.library.model.OrderDTO;
 import com.example.library.model.ValidateOrderDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService{
     @Override
-    public List<OrderDTO> getOrders(String userName) {
-        return null;
+    public Collection<OrderDTO> getOrders(String userName) {
+        return Collections.emptyList();
     }
 
     @Override

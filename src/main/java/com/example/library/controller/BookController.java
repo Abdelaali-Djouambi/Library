@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequestMapping("/book")
 public class BookController {
     public static final String LOCATION = "Location";
-    public static final String BOOK = "/game/";
+    public static final String BOOK = "/book/";
     final
     BookService bookService;
 
@@ -27,7 +27,7 @@ public class BookController {
         Collection<BookDTO> books = bookService.getBooks( skip, page);
             return ResponseEntity
                     .ok()
-                    .header("Location", "/book")
+                    .header(LOCATION, "/book")
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(books);
     }
@@ -38,10 +38,10 @@ public class BookController {
         if (optionalBook.isPresent()) {
                 return ResponseEntity
                         .ok()
-                        .header("Location", "/book/"+bookId)
+                        .header(LOCATION, BOOK+bookId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .eTag(Long.toString(optionalBook.get().getVersion()))
-                        .location(URI.create("/book/" + optionalBook.get().getId()))
+                        .location(URI.create(BOOK + optionalBook.get().getId()))
                         .body(optionalBook.get());
         }else {
             return ResponseEntity.notFound().build();
