@@ -28,22 +28,26 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<OrderDTO>> getOrders(@RequestParam String userName) {
-        return null;
+    public ResponseEntity<Collection<OrderDTO>> getOrders(@RequestParam String userName){
+        Collection<OrderDTO> orders = orderService.getOrders( userName);
+        return ResponseEntity
+                .ok()
+                .header("Location", "/order")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(orders);
     }
-
     @GetMapping
-    public ResponseEntity<OrderDTO> getOrder(@RequestParam ValidateOrderDTO validateOrderDTO) {
+    public ResponseEntity<OrderDTO> getOrder(@RequestParam ValidateOrderDTO validateOrderDTO){
         return null;
     }
 
     @PostMapping("/makeOrder")
-    public ResponseEntity<OrderDTO> makeOrder(@RequestBody MakeOrderDTO makeOrder) {
+    public ResponseEntity<OrderDTO> makeOrder(@RequestBody MakeOrderDTO makeOrder){
         return null;
     }
 
     @PostMapping("/validateOrder")
-    public ResponseEntity<OrderDTO> validateOrder(@RequestBody ValidateOrderDTO validateOrder) {
+    public ResponseEntity<OrderDTO> validateOrder(@RequestBody ValidateOrderDTO validateOrder){
         return null;
     }
 }
