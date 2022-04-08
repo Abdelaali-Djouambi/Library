@@ -7,6 +7,7 @@ import com.example.library.model.ValidateOrderDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -14,7 +15,7 @@ import java.util.List;
 public class OrderController {
 
     @GetMapping
-    public ResponseEntity<List<Book>> getOrders(@RequestParam Long orderId, @RequestParam int skip, @RequestParam int page){
+    public ResponseEntity<Collection<OrderDTO>> getOrders(@RequestParam String userName){
         return null;
     }
 
