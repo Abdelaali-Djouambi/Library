@@ -1,19 +1,13 @@
 package com.example.library.controller;
 
-import com.example.library.entity.Book;
 import com.example.library.model.BookDTO;
 import com.example.library.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -38,7 +32,7 @@ public class BookController {
                     .body(books);
     }
 
-    @GetMapping
+    @GetMapping(path = "/{bookId}")
     public ResponseEntity<BookDTO> getBook(@RequestParam Long bookId) {
         Optional<BookDTO> optionalBook = bookService.getBook(bookId);
         if (optionalBook.isPresent()) {

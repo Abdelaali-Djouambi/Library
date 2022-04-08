@@ -1,20 +1,15 @@
 package com.example.library.controller;
 
-import com.example.library.entity.Book;
-import com.example.library.model.BookDTO;
 import com.example.library.model.MakeOrderDTO;
 import com.example.library.model.OrderDTO;
 import com.example.library.model.ValidateOrderDTO;
 import com.example.library.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/order")
@@ -36,9 +31,15 @@ public class OrderController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(orders);
     }
-    @GetMapping
+    @GetMapping(path = "/{oderId}")
     public ResponseEntity<OrderDTO> getOrder(@RequestParam ValidateOrderDTO validateOrderDTO){
-        return null;
+        return orderService.getOrder(validateOrderDTO).map(orderDTO -> ResponseEntity
+                .ok()
+                .header("Location", "/order/" + validateOrderDTO.getOrderId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .eTag(Long.toString(orderDTO.getVersion()))
+                .location(URI.create("/order/" + orderDTO.getId()))
+                .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/makeOrder")
