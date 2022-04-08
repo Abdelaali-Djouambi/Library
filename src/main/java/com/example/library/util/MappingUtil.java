@@ -2,10 +2,11 @@ package com.example.library.util;
 
 import com.example.library.entity.Book;
 import com.example.library.entity.Order;
+import com.example.library.entity.User;
 import com.example.library.model.BookDTO;
 import com.example.library.model.OrderDTO;
+import com.example.library.model.UserDTO;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,4 +26,9 @@ public class MappingUtil {
     public OrderDTO mapOrderToOrderDTO(Order order){
         return modelMapper.map(order, OrderDTO.class);
     }
+
+    public UserDTO mapUserToUserDTO(User user){
+        return modelMapper.map(user, UserDTO.class);
+    }
+
 }

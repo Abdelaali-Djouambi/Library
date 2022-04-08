@@ -9,6 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderDTO extends AbstractDTO{
 
+    UserDTO user;
     List<BookDTO> books;
 
 }

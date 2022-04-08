@@ -16,7 +16,7 @@ public class ApplicationInitPopulate implements ApplicationListener<ApplicationR
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        userRepository.save(new User("foo", 50000l));
-        userRepository.save(new User("faa", 50000l));
+        userRepository.save(User.builder().userName("foo").cashBalance(1000l).build());
+        userRepository.save(User.builder().userName("faa").cashBalance(1000l).build());
     }
 }

@@ -1,12 +1,18 @@
 package com.example.library.entity;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import java.util.List;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.Collection;
+
+@Entity
+@Data
+@NoArgsConstructor
+@Table(name = "lb_order")
 public class Order extends AbstractEntity{
+    @ManyToOne
     private User user;
-    @OneToMany
-    @JoinColumn(name = "order_id")
-    private List<Book> books;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Book> books;
 }
