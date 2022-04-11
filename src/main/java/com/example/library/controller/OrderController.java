@@ -35,17 +35,20 @@ public class OrderController {
     public ResponseEntity<OrderDTO> getOrder(@RequestParam ValidateOrderDTO validateOrderDTO){
         return orderService.getOrder(validateOrderDTO).map(orderDTO -> ResponseEntity
                 .ok()
-                .header("Location", "/order/" + validateOrderDTO.getOrderId())
+                .header("Location", "/order/" + orderDTO.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .eTag(Long.toString(orderDTO.getVersion()))
-                .location(URI.create("/order/" + orderDTO.getId()))
                 .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/makeOrder")
     public ResponseEntity<OrderDTO> makeOrder(@RequestBody MakeOrderDTO makeOrder){
-        return null;
-    }
+        return orderService.makeOrder(makeOrder).map(orderDTO -> ResponseEntity
+                .ok()
+                .header("Location", "/order/makeOrder")
+                .contentType(MediaType.APPLICATION_JSON)
+                .eTag(Long.toString(orderDTO.getVersion()))
+                .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @PostMapping("/validateOrder")
     public ResponseEntity<OrderDTO> validateOrder(@RequestBody ValidateOrderDTO validateOrder){

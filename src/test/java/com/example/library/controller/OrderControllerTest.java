@@ -84,6 +84,7 @@ class OrderControllerTest {
         MakeOrderDTO makeOrderDTO = new MakeOrderDTO("foo", 2l);
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId(2l);
+        orderDTO.setVersion(1l);
         orderDTO.setUser(new UserDTO("foo",1000l));
 
         when(orderService.makeOrder(nullable(MakeOrderDTO.class))).thenReturn(Optional.of(orderDTO));
@@ -92,7 +93,7 @@ class OrderControllerTest {
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
         assertThat(responseEntity.getHeaders().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
-        assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/order/2");
+        assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/order/makeOrder");
 
         assertThat(responseEntity.getBody().getUser().getUserName()).isEqualTo("foo");
     }

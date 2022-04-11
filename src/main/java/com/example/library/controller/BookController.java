@@ -41,7 +41,6 @@ public class BookController {
                         .header(LOCATION, BOOK+bookId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .eTag(Long.toString(optionalBook.get().getVersion()))
-                        .location(URI.create(BOOK + optionalBook.get().getId()))
                         .body(optionalBook.get());
         }else {
             return ResponseEntity.notFound().build();
