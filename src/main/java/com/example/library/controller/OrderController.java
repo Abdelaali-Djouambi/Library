@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.Collection;
 
 @RestController
@@ -23,16 +22,17 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<OrderDTO>> getOrders(@RequestParam String userName){
-        Collection<OrderDTO> orders = orderService.getOrders( userName);
+    public ResponseEntity<Collection<OrderDTO>> getOrders(@RequestParam String userName) {
+        Collection<OrderDTO> orders = orderService.getOrders(userName);
         return ResponseEntity
                 .ok()
                 .header("Location", "/order")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(orders);
     }
+
     @GetMapping(path = "/{oderId}")
-    public ResponseEntity<OrderDTO> getOrder(@RequestParam ValidateOrderDTO validateOrderDTO){
+    public ResponseEntity<OrderDTO> getOrder(@RequestParam ValidateOrderDTO validateOrderDTO) {
         return orderService.getOrder(validateOrderDTO).map(orderDTO -> ResponseEntity
                 .ok()
                 .header("Location", "/order/" + orderDTO.getId())
@@ -41,17 +41,22 @@ public class OrderController {
                 .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/makeOrder")
-    public ResponseEntity<OrderDTO> makeOrder(@RequestBody MakeOrderDTO makeOrder){
-        return orderService.makeOrder(makeOrder).map(orderDTO -> ResponseEntity
+    @PostMapping("/makeBookOrder")
+    public ResponseEntity<OrderDTO> makeBookOrder(@RequestBody MakeOrderDTO makeOrder) {
+        return orderService.makeBookOrder(makeOrder).map(orderDTO -> ResponseEntity
                 .ok()
                 .header("Location", "/order/makeOrder")
                 .contentType(MediaType.APPLICATION_JSON)
                 .eTag(Long.toString(orderDTO.getVersion()))
-                .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());    }
+                .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @PostMapping("/validateOrder")
-    public ResponseEntity<OrderDTO> validateOrder(@RequestBody ValidateOrderDTO validateOrder){
-        return null;
-    }
+    public ResponseEntity<OrderDTO> validateOrder(@RequestBody ValidateOrderDTO validateOrder) {
+        return orderService.validateOrder(validateOrder).map(orderDTO -> ResponseEntity
+                .ok()
+                .header("Location", "/order/validateOrder")
+                .contentType(MediaType.APPLICATION_JSON)
+                .eTag(Long.toString(orderDTO.getVersion()))
+                .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());    }
 }

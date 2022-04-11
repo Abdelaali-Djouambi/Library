@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Optional<OrderDTO> makeOrder(MakeOrderDTO makeOrderDTO) {
+    public Optional<OrderDTO> makeBookOrder(MakeOrderDTO makeOrderDTO) {
         return Optional.empty();
     }
 

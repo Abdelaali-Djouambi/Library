@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface OrderService {
     Collection<OrderDTO> getOrders(String userName);
     Optional<OrderDTO> getOrder(ValidateOrderDTO validateOrderDTO);
-    Optional<OrderDTO> makeOrder(MakeOrderDTO makeOrderDTO);
+    Optional<OrderDTO> makeBookOrder(MakeOrderDTO makeOrderDTO);
     Optional<OrderDTO> validateOrder(ValidateOrderDTO validateOrderDTO);
 }

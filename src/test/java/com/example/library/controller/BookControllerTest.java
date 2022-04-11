@@ -33,7 +33,7 @@ class BookControllerTest {
 
     @Test
     @DisplayName("Get books list - success")
-    void getBooksListSuccess(){
+    void get_book_list_success(){
         List<BookDTO> bookDTOs= Mockito.mock(ArrayList.class);
         when(bookDTOs.size()).thenReturn(10);
         when(bookService.getBooks(any(Integer.class),any(Integer.class))).thenReturn(bookDTOs);
@@ -48,7 +48,7 @@ class BookControllerTest {
 
     @Test
     @DisplayName("Get books by id - success")
-    void findBookByIdSuccess(){
+    void find_book_byId_success(){
         BookDTO bookDTO= new BookDTO("Lord of the ring", "J.R.R Tolkien",30l,200l);
         bookDTO.setVersion(1l);
         bookDTO.setId(1l);
@@ -66,7 +66,7 @@ class BookControllerTest {
 
     @Test
     @DisplayName("Get books by id - Not found")
-    void findBookByIdFail(){
+    void find_book_byId_not_found(){
         when(bookService.getBook(nullable(Long.class))).thenReturn(Optional.empty());
         ResponseEntity<BookDTO> responseEntity = bookController.getBook(1l);
 

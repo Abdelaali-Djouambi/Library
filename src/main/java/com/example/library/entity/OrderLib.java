@@ -10,7 +10,7 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @Table(name = "lb_order")
-public class Order extends AbstractEntity{
+public class OrderLib extends AbstractEntity{
     public enum STATUS{
         PENDING,
         VALIDATED,
