@@ -1,6 +1,6 @@
 package com.example.library.controller;
 
-import com.example.library.model.MakeOrderDTO;
+import com.example.library.model.OrderBookDTO;
 import com.example.library.model.OrderDTO;
 import com.example.library.model.ValidateOrderDTO;
 import com.example.library.service.OrderService;
@@ -42,10 +42,10 @@ public class OrderController {
     }
 
     @PostMapping("/makeBookOrder")
-    public ResponseEntity<OrderDTO> makeBookOrder(@RequestBody MakeOrderDTO makeOrder) {
-        return orderService.makeBookOrder(makeOrder).map(orderDTO -> ResponseEntity
+    public ResponseEntity<OrderDTO> makeBookOrder(@RequestBody OrderBookDTO makeOrder) {
+        return orderService.orderBook(makeOrder).map(orderDTO -> ResponseEntity
                 .ok()
-                .header("Location", "/order/makeOrder")
+                .header("Location", "/order/makeBookOrder")
                 .contentType(MediaType.APPLICATION_JSON)
                 .eTag(Long.toString(orderDTO.getVersion()))
                 .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());
@@ -56,6 +56,16 @@ public class OrderController {
         return orderService.validateOrder(validateOrder).map(orderDTO -> ResponseEntity
                 .ok()
                 .header("Location", "/order/validateOrder")
+                .contentType(MediaType.APPLICATION_JSON)
+                .eTag(Long.toString(orderDTO.getVersion()))
+                .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/cancelBookOrder")
+    public ResponseEntity<OrderDTO> cancelBookOrder(@RequestBody OrderBookDTO orderBookDTO) {
+        return orderService.cancelBookOrder(orderBookDTO).map(orderDTO -> ResponseEntity
+                .ok()
+                .header("Location", "/order/cancelBookOrder")
                 .contentType(MediaType.APPLICATION_JSON)
                 .eTag(Long.toString(orderDTO.getVersion()))
                 .body(orderDTO)).orElseGet(() -> ResponseEntity.notFound().build());    }

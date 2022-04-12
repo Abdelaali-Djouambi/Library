@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MakeOrderDTO {
+public class OrderBookDTO {
 
     private String userName;
     private Long bookId;

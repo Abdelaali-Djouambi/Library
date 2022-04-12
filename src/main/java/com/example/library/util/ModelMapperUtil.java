@@ -7,15 +7,16 @@ import com.example.library.model.BookDTO;
 import com.example.library.model.OrderDTO;
 import com.example.library.model.UserDTO;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MappingUtil {
+public class ModelMapperUtil {
 
-    final
-    ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    public MappingUtil(ModelMapper modelMapper) {
+    @Autowired
+    public ModelMapperUtil(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 

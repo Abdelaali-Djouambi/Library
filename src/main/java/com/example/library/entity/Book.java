@@ -14,8 +14,8 @@ import javax.persistence.Entity;
 public class Book extends AbstractEntity{
 
     private String title;
-    private long stock;
     private String author;
     private Long price;
+    private Long stock;
 
 }
